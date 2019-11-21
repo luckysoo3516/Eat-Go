@@ -1,8 +1,11 @@
 package kr.co.darcie.eatgo.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class RestaurantRepository {
 
     private List<Restaurant> restaurants = new ArrayList<>();
