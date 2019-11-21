@@ -1,6 +1,7 @@
 package kr.co.darcie.eatgo.interfaces;
 
 import kr.co.darcie.eatgo.domain.RestaurantRepository;
+import kr.co.darcie.eatgo.domain.RestaurantRepositoryImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class RestaurantControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @SpyBean
+    @SpyBean(RestaurantRepositoryImpl.class)
     private RestaurantRepository restaurantRepository;
 
     @Test
