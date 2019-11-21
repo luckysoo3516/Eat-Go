@@ -25,12 +25,10 @@ public class RestaurantController {
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-        List<Restaurant> restaurants = repository.findAll();
 
-        Restaurant restaurant = restaurants.stream()
-                .filter(r->r.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        //        List<Restaurant> restaurants = repository.findAll();
+        Restaurant restaurant = repository.findById(id);
+
 
         return restaurant;
     }
