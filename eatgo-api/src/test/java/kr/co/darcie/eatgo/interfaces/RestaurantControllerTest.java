@@ -1,5 +1,6 @@
 package kr.co.darcie.eatgo.interfaces;
 
+import kr.co.darcie.eatgo.application.RestaurantService;
 import kr.co.darcie.eatgo.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,9 @@ public class RestaurantControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
 
     @SpyBean(RestaurantRepositoryImpl.class)
     private RestaurantRepository restaurantRepository;
