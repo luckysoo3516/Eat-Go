@@ -1,5 +1,6 @@
 package kr.co.darcie.eatgo.interfaces;
 
+import kr.co.darcie.eatgo.application.RestaurantService;
 import kr.co.darcie.eatgo.domain.MenuItem;
 import kr.co.darcie.eatgo.domain.MenuItemRepository;
 import kr.co.darcie.eatgo.domain.Restaurant;
@@ -14,29 +15,22 @@ import java.util.List;
 @RestController
 public class RestaurantController {
 
-    @Autowired
-    private RestaurantRepositoryImpl restaurantRepository;
 
     @Autowired
-    private MenuItemRepository menuItemRepository;
+    private RestaurantService restaurantService;
+
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
 
-        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<Restaurant> restaurants = restaurantService.getRestaurants();
 
         return restaurants;
     }
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-
-
-        Restaurant restaurant = restaurantRepository.findById(id);
-
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-
-        restaurant.setMenuItems(menuItems);
+        Restaurant restaurant = restaurantService.getRestaurant(id);
 
         return restaurant;
     }
