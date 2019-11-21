@@ -1,5 +1,6 @@
 package kr.co.darcie.eatgo.interfaces;
 
+import kr.co.darcie.eatgo.application.RestaurantService;
 import kr.co.darcie.eatgo.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ public class RestaurantControllerTest {
 
     @MockBean
     private RestaurantService restaurantService;
+
 
     @Test
     public void list() throws Exception {
