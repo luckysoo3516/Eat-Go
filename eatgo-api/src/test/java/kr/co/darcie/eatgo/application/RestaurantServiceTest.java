@@ -27,8 +27,12 @@ public class RestaurantServiceTest {
 
     @Before
     public void setUp() {
+        // 테스트 실행 전에 각 테스트 당 한번씩 실행된다
+        // RestaurantService에서 사용할 Repository를 테스트 전에 주입해준다.
 
+        //@Mock 이 붙은 객체들을 초기화시켜준다
         MockitoAnnotations.initMocks(this);
+
 
         mockRestaurantRepository();
         mockMenuItemRepository();
