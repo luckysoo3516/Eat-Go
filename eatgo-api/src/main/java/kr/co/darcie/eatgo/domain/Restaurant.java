@@ -1,17 +1,32 @@
 package kr.co.darcie.eatgo.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
     private String address;
-    private Long id;
+
+    @Transient
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public Restaurant() {
 
+    }
+
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
     }
 
     public Restaurant(Long id, String name, String address) {
@@ -22,6 +37,10 @@ public class Restaurant {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -50,4 +69,5 @@ public class Restaurant {
             addMenuItem(menuItem);
         }
     }
+
 }
