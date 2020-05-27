@@ -3,6 +3,7 @@ package kr.co.darcie.eatgo.interfaces;
 import kr.co.darcie.eatgo.application.RestaurantService;
 import kr.co.darcie.eatgo.domain.MenuItem;
 import kr.co.darcie.eatgo.domain.Restaurant;
+import kr.co.darcie.eatgo.domain.RestaurantNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class RestaurantControllerTest {
     }
 
     @Test
-    public void detail() throws Exception {
+    public void detailWithExisted() throws Exception {
         Restaurant restaurant1 = Restaurant.builder()
                 .id(1004L)
                 .name("JOCKER House")
@@ -101,6 +102,14 @@ public class RestaurantControllerTest {
     }
 
     @Test
+    public void detailWithNotExisted() throws Exception {
+        given(restaurantService.getRestaurant(404L)).willThrow(new RestaurantNotFoundException(404L));
+        mvc.perform(get("/restaurants/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
+    }
+
+    @Test
     public void createWithValidData() throws Exception {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
@@ -131,12 +140,20 @@ public class RestaurantControllerTest {
     }
 
     @Test
-    public void update() throws Exception {
+    public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"JOKER Bar\", \"address\":\"Busan\"}"))
                 .andExpect(status().isOk());
         verify(restaurantService).updateRestaurant(1004L, "JOKER Bar", "Busan");
+    }
+
+    @Test
+    public void updateWithInvalidData() throws Exception {
+        mvc.perform(patch("/restaurants/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\", \"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
     }
 
 }
