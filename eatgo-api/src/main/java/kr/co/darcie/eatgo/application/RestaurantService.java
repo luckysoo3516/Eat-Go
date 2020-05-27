@@ -5,7 +5,6 @@ import kr.co.darcie.eatgo.domain.MenuItemRepository;
 import kr.co.darcie.eatgo.domain.Restaurant;
 import kr.co.darcie.eatgo.domain.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class RestaurantService {
 
     public Restaurant getRestaurant(Long id){
 
-        Restaurant restaurant = restaurantRepository.findById(id);
+        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
 
@@ -42,4 +41,8 @@ public class RestaurantService {
 
         return restaurant;
     };
+
+    public Restaurant addRestaurant(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
+    }
 }
