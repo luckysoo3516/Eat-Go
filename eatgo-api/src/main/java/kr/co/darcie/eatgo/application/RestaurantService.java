@@ -1,12 +1,10 @@
 package kr.co.darcie.eatgo.application;
 
-import kr.co.darcie.eatgo.domain.MenuItem;
-import kr.co.darcie.eatgo.domain.MenuItemRepository;
-import kr.co.darcie.eatgo.domain.Restaurant;
-import kr.co.darcie.eatgo.domain.RestaurantRepository;
+import kr.co.darcie.eatgo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -33,7 +31,8 @@ public class RestaurantService {
 
     public Restaurant getRestaurant(Long id){
 
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
 
@@ -45,4 +44,12 @@ public class RestaurantService {
     public Restaurant addRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
+
+    @Transactional
+    public Restaurant updateRestaurant(Long id, String name, String address) {
+        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        restaurant.updateInformation(name, address);
+        return restaurant;
+    }
+
 }
