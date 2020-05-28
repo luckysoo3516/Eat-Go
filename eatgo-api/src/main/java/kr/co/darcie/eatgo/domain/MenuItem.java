@@ -1,14 +1,13 @@
 package kr.co.darcie.eatgo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 import net.bytebuddy.asm.Advice;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 @Builder
@@ -21,8 +20,13 @@ public class MenuItem {
     @GeneratedValue
     private Long id;
 
+    @Setter
     private Long restaurantId;
 
     private String name;
+
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private boolean destroy;
 
 }
